@@ -17,16 +17,16 @@ class EMADictSmoothing(object):
         Args:
           data: Dictionary with pose classification. Sample:
               {
-                'pushups_down': 8,
-                'pushups_up': 2,
+                'bench_press_down': 8,
+                'bench_press_up': 2,
               }
 
         Result:
           Dictionary in the same format but with smoothed and float instead of
           integer values. Sample:
             {
-              'pushups_down': 8.3,
-              'pushups_up': 1.7,
+              'bench_press_down': 8.3,
+              'bench_press_up': 1.7,
             }
         """
         # Add new data to the beginning of the window for simpler code.

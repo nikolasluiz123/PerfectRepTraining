@@ -43,8 +43,8 @@ class PoseClassifier(object):
 
         Required folder structure:
           neutral_standing.csv
-          pushups_down.csv
-          pushups_up.csv
+          bench_press_down.csv
+          bench_press_up.csv
           squats_down.csv
           ...
 
@@ -110,8 +110,8 @@ class PoseClassifier(object):
         Returns:
           Dictionary with count of nearest pose samples from the database. Sample:
             {
-              'pushups_down': 8,
-              'pushups_up': 2,
+              'bench_press_down': 8,
+              'bench_press_up': 2,
             }
         """
         # Check that provided and target poses have the same shape.

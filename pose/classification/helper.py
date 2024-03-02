@@ -30,19 +30,19 @@ class BootstrapHelper(object):
         """Bootstraps images in a given folder.
 
         Required image in folder (same use for image out folder):
-          pushups_up/
+          bench_press_up/
             image_001.jpg
             image_002.jpg
             ...
-          pushups_down/
+          bench_press_down/
             image_001.jpg
             image_002.jpg
             ...
           ...
 
         Produced CSVs out folder:
-          pushups_up.csv
-          pushups_down.csv
+          bench_press_up.csv
+          bench_press_down.csv
 
         Produced CSV structure with pose 3D landmarks:
           sample_00001,x1,y1,z1,x2,y2,z2,....
@@ -63,7 +63,7 @@ class BootstrapHelper(object):
                 os.makedirs(images_out_folder)
 
             with open(csv_out_path, 'w') as csv_out_file:
-                csv_out_writer = csv.writer(csv_out_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+                csv_out_writer = self.get_csv_writer(csv_out_file)
                 # Get list of images.
                 image_names = sorted([n for n in os.listdir(images_in_folder) if not n.startswith('.')])
                 if per_pose_class_limit is not None:
@@ -103,8 +103,7 @@ class BootstrapHelper(object):
                         csv_out_writer.writerow([image_name] + pose_landmarks.flatten().astype(np.str).tolist())
 
                     # Draw XZ projection and concatenate with the image.
-                    projection_xz = self._draw_xz_projection(
-                        output_frame=output_frame, pose_landmarks=pose_landmarks)
+                    projection_xz = self._draw_xz_projection(output_frame=output_frame, pose_landmarks=pose_landmarks)
                     output_frame = np.concatenate((output_frame, projection_xz), axis=1)
 
     def _draw_xz_projection(self, output_frame, pose_landmarks, r=0.5, color='red'):
@@ -151,7 +150,7 @@ class BootstrapHelper(object):
 
             # Re-write the CSV removing lines without corresponding images.
             with open(csv_out_path, 'w') as csv_out_file:
-                csv_out_writer = csv.writer(csv_out_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+                csv_out_writer = self.get_csv_writer(csv_out_file)
                 for row in rows:
                     image_name = row[0]
                     image_path = os.path.join(images_out_folder, image_name)
@@ -168,6 +167,9 @@ class BootstrapHelper(object):
                     os.remove(image_path)
                     if print_removed_items:
                         print('Removed image from folder: ', image_path)
+
+    def get_csv_writer(self, csv_out_file):
+        return csv.writer(csv_out_file, delimiter=',', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
 
     def analyze_outliers(self, outliers):
         """Classifies each sample agains all other to find outliers.

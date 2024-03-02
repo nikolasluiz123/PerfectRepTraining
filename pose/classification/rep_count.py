@@ -30,8 +30,8 @@ class RepetitionCounter(object):
           pose_classification: Pose classification dictionary on current frame.
             Sample:
               {
-                'pushups_down': 8.3,
-                'pushups_up': 1.7,
+                'bench_press_down': 8.3,
+                'bench_press_up': 1.7,
               }
 
         Returns:

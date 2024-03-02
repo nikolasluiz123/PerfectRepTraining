@@ -1,5 +1,7 @@
 /videos/
 /frames/
+/fitness_poses_images_in/
+/fitness_poses_images_out/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
